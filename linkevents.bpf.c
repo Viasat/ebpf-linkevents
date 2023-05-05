@@ -6,11 +6,6 @@
 #include <bpf/bpf_tracing.h>
 #include "linkevents.h"
 
-// https://github.com/iovisor/bpftrace
-// https://github.com/iovisor/bcc/blob/master/docs/reference_guide.md#1-kprobes
-// https://nakryiko.com/posts/libbpf-bootstrap/
-// https://nakryiko.com/posts/bpf-core-reference-guide/
-
 struct {
 	__uint(type, BPF_MAP_TYPE_PERF_EVENT_ARRAY);
 	__uint(key_size, sizeof(__u32));
