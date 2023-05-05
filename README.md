@@ -34,7 +34,7 @@ docker run -it --cap-add sys_admin --cap-add sys_resource ebpf-linkevents /usr/b
   and create a dummy interface in it:
 
 ```
-docker run -it --network none alpine ip link add dummy0 type dummy
+docker run -it --network none --cap-add net_admin alpine ip link add dummy0 type dummy
 ```
 
 The monitor will show all link and address activity in that container.
