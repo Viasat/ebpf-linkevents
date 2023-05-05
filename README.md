@@ -44,7 +44,7 @@ in addition to the `dummy0` link.
 ## Links
 
 * https://github.com/iovisor/bpftrace
-* https://github.com/iovisor/bcc/blob/master/docs/referen
+* [https://github.com/iovisor/bcc/blob/master/docs/reference_guide.md](https://github.com/iovisor/bcc/blob/master/docs/reference_guide.md)
 * https://nakryiko.com/posts/libbpf-bootstrap/
 * https://nakryiko.com/posts/bpf-core-reference-guide/
 
