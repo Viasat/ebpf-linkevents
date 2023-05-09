@@ -79,7 +79,7 @@ static void handle_event(void *ctx, int cpu, void *data, __u32 data_size)
 
 	printf("{\"ts\":%llu,\"source\":\"%s\","
 	       "\"type\":%d,\"name\":\"%s\",\"ifindex\":%d,"
-	       "\"dev_addr\":\"%s\",\"ifa_addr\":\"%s\","
+	       "\"dev_addr\":\"%s\",\"ifa_address\":\"%s\","
 	       "\"flags\":%u,\"nsid\":%u}\n",
 	       e->ts, e->source == 0 ? "link" : "addr",
 	       e->type, e->name, e->ifindex,
