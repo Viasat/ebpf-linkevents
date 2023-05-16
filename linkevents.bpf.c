@@ -17,7 +17,7 @@ static int __rtmsg_ifinfo_build_skb(void *ctx, int source,
 				    struct in_ifaddr *ifa)
 {
 	u32 pid = bpf_get_current_pid_tgid() >> 32;
-	u64 ts = bpf_ktime_get_ns();
+	u64 ts = bpf_ktime_get_boot_ns();
 	struct event_t event = {};
 
 	event.pid = pid;

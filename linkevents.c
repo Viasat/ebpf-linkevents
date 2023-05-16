@@ -24,6 +24,7 @@
 
 static volatile sig_atomic_t exiting = 0;
 static bool verbose = false;
+static __u64 boottime_epoch_ms = 0;
 
 const char *argp_program_version = "linkevents 1.0";
 const char *argp_program_bug_address = "https://github.com/LonoCloud/ebpf-linkevents";
@@ -77,11 +78,13 @@ static void handle_event(void *ctx, int cpu, void *data, __u32 data_size)
 		 (unsigned char)e->dev_addr[5]);
 	inet_ntop(AF_INET, &e->ifa_address, ip, 16);
 
-	printf("{\"ts\":%llu,\"source\":\"%s\","
+	printf("{\"ts\":%llu,"
+	       "\"source\":\"%s\","
 	       "\"type\":%d,\"name\":\"%s\",\"ifindex\":%d,"
 	       "\"dev_addr\":\"%s\",\"ifa_address\":\"%s\","
 	       "\"flags\":%u,\"nsid\":%u}\n",
-	       e->ts, e->source == 0 ? "link" : "addr",
+	       e->ts / 1000000 + boottime_epoch_ms, // epoch ms
+	       e->source == 0 ? "link" : "addr",
 	       e->type, e->name, e->ifindex,
 	       mac, ip,
 	       e->flags, e->nsid);
@@ -108,6 +111,8 @@ int main(int argc, char **argv)
 	};
 	struct linkevents_bpf *obj = NULL;
 	struct perf_buffer *pb = NULL;
+	struct timespec ts;
+	__u64 realtime_ms, boottime_ms;
 	int err;
 
 	err = argp_parse(&argp, argc, argv, 0, NULL, NULL);
@@ -115,6 +120,13 @@ int main(int argc, char **argv)
 		return err;
 
 	libbpf_set_print(libbpf_print_fn);
+
+	info("Saving boot epoch time (milliseconds)\n");
+	clock_gettime(CLOCK_REALTIME, &ts);
+	realtime_ms = (ts.tv_sec * 1000000000ULL + ts.tv_nsec) / 1000000;
+	clock_gettime(CLOCK_BOOTTIME, &ts);
+	boottime_ms =  (ts.tv_sec * 1000000000ULL + ts.tv_nsec) / 1000000;
+	boottime_epoch_ms = realtime_ms - boottime_ms;
 
 	info("Checking BTF for CO-RE\n");
 	err = ensure_core_btf(&open_opts);
