@@ -48,3 +48,10 @@ in addition to the `dummy0` link.
 * https://nakryiko.com/posts/libbpf-bootstrap/
 * https://nakryiko.com/posts/bpf-core-reference-guide/
 
+## Copyright & License
+
+This software is copyright Viasat, Inc. The kernel eBPF code is
+released under the terms of the GPL-2.0 license and other code is
+released under either the LGPL-2.1 OR BSD-2-Clause licenses. A copy of
+the licenses are located in the the files LICENSE (GPL-2.0),
+LICENSE.lgpl21, and LICENSE.bsd-2-clause.
